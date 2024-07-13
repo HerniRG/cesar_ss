@@ -1,26 +1,30 @@
-from app.vistas import crea_cifrador, cesar, crea_par_cesar
+from app.modelos import Cifrador
 
 def test_cesar():
-
-    assert cesar("HOLA", 1) == "IPMB" 
-    assert cesar("ZARA", 2) == "ACTC"
-    assert cesar("HOLA", 1) == "IPMB"
-    assert cesar("ZARA", 2) == "ACTC"
-    assert cesar("", 10) == ""
-    assert cesar("HOLA", -1) == "GÑK "
-    assert cesar("ZIGZAG", 1) == " JH BH"
-    assert cesar(" JH BH", -1) == "ZIGZAG"
-
+    cifrador = Cifrador(1)
+    assert cifrador.cesar("HOLA") == "IPMB"
+    cifrador.d = 2
+    assert cifrador.cesar("ZARA") == "ACTC"
+    cifrador.d = 1
+    assert cifrador.cesar("HOLA") == "IPMB"
+    cifrador.d = 2
+    assert cifrador.cesar("ZARA") == "ACTC"
+    cifrador.d = 10
+    assert cifrador.cesar("") == ""
+    cifrador.d = -1
+    assert cifrador.cesar("HOLA") == "GÑK "
+    cifrador.d = 1
+    assert cifrador.cesar("ZIGZAG") == " JH BH"
+    cifrador.d = -1
+    assert cifrador.cesar(" JH BH") == "ZIGZAG"
 
 def test_crea_cifrador():
-    
-    cesar3 = crea_cifrador(3)
+    cifrador = Cifrador(3)
+    cesar3 = cifrador.crea_cifrador()
     assert cesar3("ZIGZAG") == "BLJBDJ"
 
-
 def test_crea_par_cesar():
-
-    cifrador_cesar_3, descifrador_cesar_3 = crea_par_cesar(3)
-
+    cifrador = Cifrador(3)
+    cifrador_cesar_3, descifrador_cesar_3 = cifrador.crea_par_cesar()
     assert cifrador_cesar_3("ZIGZAG") == "BLJBDJ"
     assert descifrador_cesar_3("BLJBDJ") == "ZIGZAG"
